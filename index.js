@@ -21,8 +21,8 @@ const roomlist = {
 module.exports = {roomlist};
 const fs = require('node:fs');
 const { Client, Collection, Intents } = require('discord.js');
-const token = process.env.TOKEN
-
+const token = process.env.TOKEN;
+// hej
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
