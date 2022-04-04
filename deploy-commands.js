@@ -1,14 +1,10 @@
 const fs = require('node:fs');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-<<<<<<< HEAD
 
 const clientId = process.env.CLIENTID
 const guildId = process.env.GUILDID
 const token = process.env.DISCORD_TOKEN
-=======
-const { clientId, guildId, token } = require('./config.json');
->>>>>>> parent of 35935ea (ja)
 
 const commands = [];
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
