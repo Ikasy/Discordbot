@@ -21,7 +21,7 @@ const roomlist = {
 module.exports = {roomlist};
 const fs = require('node:fs');
 const { Client, Collection, Intents } = require('discord.js');
-const { token } = require('./config.json');
+const token = process.env.TOKEN
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
