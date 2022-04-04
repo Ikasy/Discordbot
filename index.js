@@ -21,12 +21,8 @@ const roomlist = {
 module.exports = {roomlist};
 const fs = require('node:fs');
 const { Client, Collection, Intents } = require('discord.js');
-<<<<<<< HEAD
-//const token = process.env.TOKEN
-=======
-const token = process.env.TOKEN
->>>>>>> parent of bf561ed (Merge pull request #1 from Ikasy/test)
-
+const token = process.env.TOKEN;
+// hej
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
@@ -65,4 +61,4 @@ client.on('interactionCreate', async interaction => {
 	}
 });
 
-client.login();
+client.login(token);
