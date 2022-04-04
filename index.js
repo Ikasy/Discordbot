@@ -1,7 +1,4 @@
-const Discord = require("discord.js");
-
-const TOKEN ="OTQ2MzUzMTk4OTkyNTg4ODgw.YhdeGQ.-suHMAWe0gVFLwjS8grLooU64fU";
-let roomlist = {
+const roomlist = {
     "celler": {
         "celle1": 0,
         "celle2": 0,
@@ -20,49 +17,48 @@ let roomlist = {
     },
     
 
+};
+module.exports = {roomlist};
+const fs = require('node:fs');
+const { Client, Collection, Intents } = require('discord.js');
+const { token } = require('./config.json');
+
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+for (const file of eventFiles) {
+	const event = require(`./events/${file}`);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+}
+client.commands = new Collection();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	client.commands.set(command.data.name, command);
 }
 
-let picked = roomlist.celler[Math.floor(Math.random() * 14)]
-console.log(picked)
+client.once('ready', () => {
+	console.log('Ready!');
+});
 
-function makeCode (){
-    let firstN = random(celler);
-    let secondN = random(celler);
-    let thirdN = random(celler);
-    let fourthN = random(celler);
-}
-const client = new Discord.Client({
-    intents: [
-        "GUILDS",
-        "GUILD_MESSAGES"
-    ]
-})
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
 
-client.on("ready",() => {
-console.log(`Logged in as ${client.user.tag}`)
-})
+	const command = client.commands.get(interaction.commandName);
 
-client.on("messageCreate",(message) => {
-    
-    if (message.content == "p.start"){
-        room = "Celle5";
-        message.reply("Du har nu startet fængsel eventyret. Du befinder dig i din celle og kan gå ud til frokost når du lyster. Forsæt med p.opendoors for at se hvor du kan gå hen og p.goto for at flytte lokale.")
-        // billede af fængsel?
-    }
-    if (message.content == "p.search" && room == "Celle5"){
-        message.reply("Du er i din egen celle. Du finder en kold seng med lagner og et skrive bord")
-    }
-    if (message.content == "p.opendoors" && room == "Celle5"){
-        message.reply("Dine mulige rum at gå til er: Cellegang")
-    }
-    if (message.content == "p.opendoors" && room == "Cellegang"){
-        message.reply("Dine mulige rum at gå til er: Cellerne fra 1-14. Skriv Celle#. Der er to løste døre til Vagtstuen og til Receptionen. Den sidste leder ud til kantinen")
-    }
-    if (message.content == "p.goto Cellegang" && room == "Celle5"){
-        room = "Cellegang";
-        message.reply("Du er gået ud i gangen nu. Du kan se 14 celler med din egen. Alle dørene ser ud til at være åben, da resten af fangerne er i kantinen. ")
-    }
-    
-    })
+	if (!command) return;
 
-client.login(TOKEN)
+	try {
+		await command.execute(interaction);
+	} catch (error) {
+		console.error(error);
+		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+	}
+});
+
+client.login(token);
