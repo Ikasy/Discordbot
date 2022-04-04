@@ -5,6 +5,7 @@ const { Routes } = require('discord-api-types/v9');
 const clientId = process.env.CLIENTID
 const guildId = process.env.GUILDID
 const token = process.env.DISCORD_TOKEN
+>>>>>>> parent of 35935ea (ja)
 
 const commands = [];
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
