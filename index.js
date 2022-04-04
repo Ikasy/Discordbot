@@ -21,8 +21,12 @@ const roomlist = {
 module.exports = {roomlist};
 const fs = require('node:fs');
 const { Client, Collection, Intents } = require('discord.js');
+<<<<<<< HEAD
 const token = process.env.DISCORD_TOKEN
 
+=======
+const { token } = require('./config.json');
+>>>>>>> parent of 35935ea (ja)
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
