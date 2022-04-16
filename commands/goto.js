@@ -12,8 +12,8 @@ module.exports = {
             .setRequired(true)
 			.addChoice('Gang', 'gang')
 			.addChoice('Anden', 'ganfaf')),
-	async execute(interaction, currentRoom, celler) {
-		// currentRoom = choice
-		await interaction.reply(`Lokation: ${currentRoom}\nDu har nu flyttet dig`);
+	async execute(interaction, gamedata) {
+		gamedata.currentRoom = choice
+		await interaction.reply(`Lokation: ${gamedata.currentRoom}\nDu har nu flyttet dig`);
 	},
 };

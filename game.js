@@ -22,6 +22,7 @@ class Game {
             ['celle13'],
             ['celle14'],
         ];
+        this.available = [];
     }
 
     pickN(mxNR) {
@@ -33,24 +34,29 @@ class Game {
         } else {
         if(this.chosenCells.length < mxNR) {
         //Recursively generate number
-            return  pickN(mxNR);
+            return  this.pickN(mxNR);
         } else {
             console.log('No more numbers available.');
             return false;
         }}}
 
     ready(){
-        console.log(pickN(14))
-        console.log(pickN(14))
-        console.log(pickN(14))
-        console.log(pickN(14))
-        celler[chosenCells[0]].push( firstN );
-        celler[chosenCells[1]].push( secondN );
-        celler[chosenCells[2]].push( thirdN );
-        celler[chosenCells[3]].push( fourthN );
+        this.pickN(14)
+        this.pickN(14)
+        this.pickN(14)
+        this.pickN(14)
+        this.celler[this.chosenCells[0]].push( this.firstN );
+        this.celler[this.chosenCells[1]].push( this.secondN );
+        this.celler[this.chosenCells[2]].push( this.thirdN );
+        this.celler[this.chosenCells[3]].push( this.fourthN );
+    }
+    doors(){
+        if (this.currentRoom == "celle4") {
+            this.available;
+        }
     }
 }
-
+module.exports = {Game};
     
 
     

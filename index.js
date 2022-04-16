@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const { Client, Collection, Intents } = require('discord.js');
-const { deploy } = require('./deploy-commands.js')
+const { deploy } = require('./deploy-commands.js');
+const { Game } = require('./game');
 //henter bottens token
 const { token, guildId, clientId } = require('./config.json');
 deploy(clientId, guildId, token)
@@ -9,6 +10,7 @@ const client = new Client({ intents:
     [Intents.FLAGS.GUILDS],
 });
 
+let gamedata = new Game()
 //samler kommandoer og kigger i directory efter filer som slutter på .js
 client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -35,7 +37,7 @@ client.on('interactionCreate', async interaction => {
 	if (!command) return;
 
 	try {
-		await command.execute(interaction, currentRoom, celler);
+		await command.execute(interaction, gamedata);
 	} catch (error) {
 		console.error(error);
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true/*betyder at den ikke vare længe*/  });
