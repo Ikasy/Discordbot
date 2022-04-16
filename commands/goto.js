@@ -1,16 +1,19 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-//const { roomlist } = require('../index.js'); NOT WORKING?? 
+const { SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandStringOption } = require('@discordjs/builders');
+const { Application, ApplicationCommand } = require('discord.js');
 
+//går sådan man kan hente informatoionerne i en anden fil
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('goto')
-		.setDescription('Gå til andre rum!'),
-        /*.addStringOption(option =>
-            option.setName('Rum')
-                .setDescription('Andre rum du kan flytte dig til')
-                .setRequired(true)
-                .addChoice('Gang')),   no workkkk also dependent on the room youre in*/
-	async execute(interaction) {
-		await interaction.reply(`Lokation: lokale\nDu har nu flyttet dig`);
+		.setDescription('gå til andre rum!')
+		.addStringOption( new SlashCommandStringOption()
+			.setName('rum')
+            .setDescription('Åbne rum du kan gå til')
+            .setRequired(true)
+			.addChoice('Gang', 'gang')
+			.addChoice('Anden', 'ganfaf')),
+	async execute(interaction, currentRoom, celler) {
+		// currentRoom = choice
+		await interaction.reply(`Lokation: ${currentRoom}\nDu har nu flyttet dig`);
 	},
 };
