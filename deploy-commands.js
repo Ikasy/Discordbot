@@ -11,7 +11,7 @@ function deploy (clientId, guildId, token ){
 		const command = require(`./commands/${file}`);
 		commands.push(command.data.toJSON());
 	}
-	// ?????????????????????
+	// Giver botten kommandoerne
 	const rest = new REST({ version: '9' }).setToken(token);
 	
 	rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })

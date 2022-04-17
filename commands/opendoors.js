@@ -5,6 +5,8 @@ module.exports = {
 		.setName('opendoors')
 		.setDescription('Fortæller hvilke døre du kan gå til'),
 	async execute(interaction, gamedata) {
-		await interaction.reply('ja!');
+		gamedata.doors()
+		console.log(gamedata.available)
+		await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dine muligheder er ${gamedata.available}`);
 	},
-};
+}; 

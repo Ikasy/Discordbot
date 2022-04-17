@@ -1,15 +1,3 @@
-let picked = roomlist.celler[Math.floor(Math.random() * 14)]
-console.log(picked)
-
-function makeCode (){
-    let firstN = random(celler);
-    let secondN = random(celler);
-    let thirdN = random(celler);
-    let fourthN = random(celler);
-}
-
-
-
 client.on("messageCreate",(message) => {
     
     if (message.content == "p.start"){
