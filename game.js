@@ -23,6 +23,10 @@ class Game {
             ['celle14'],
         ];
         this.available = [];
+        this.code = `${this.firstN}${this.secondN}${this.thirdN}${this.fourthN}`;
+        console.log(this.code)
+        this.inventory = [];
+        this.kcheck = false;
     }
 
     pickN(mxNR) {
