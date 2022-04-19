@@ -57,7 +57,7 @@ module.exports = {
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har ikke adgang til dette rum fra hvor du er, prøv et andet lokale`)
 		
 		//hvis man skriver en kode til et rum som ikke er køkken
-		} else if (going != 'køkken' && password != undefined){
+		} else if (going != 'køkken' && password != undefined && going != 'opbevaring'){
 			gamedata.currentRoom = interaction.options.getString('rum')
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dette rum skal ikke bruge en kode, derfor har du flyttet dig alligevel`)
 		
@@ -75,14 +75,16 @@ module.exports = {
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har skrevet den forkerte kode prøv igen`)
 
 		//hvis man prøver at bruge en ting et andet sted en ved sygeplejersken
-		}  else if (going != 'sygeplejerske' &&   used != undefined){
+		}  else if (going != 'sygeplejerske' &&   used != undefined && going != 'vagt'){
 			gamedata.currentRoom = interaction.options.getString('rum')
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dette rum skal ikke bruge en genstand for at åbne, derfor har du flyttet dig alligevel`)
 
 		// hvis ikke der er angivet en genstand
 		} else if (going == 'sygeplejerske' && used == undefined && gamedata.sunlocked == false) {	
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dette rum skal bruge en genstand for at åbne, prøv at led efter ting du kan bruge eller kig i din inventory`)
+
 		}else if (going == 'sygeplejerske' && used == undefined && gamedata.sunlocked == true){
+			gamedata.currentRoom = interaction.options.getString('rum')	
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har allerede låst op for dette rum, og har nu flyttet dig.`)
 
 		//hvis man bruger et forkert item ved sygeplejersken 
@@ -96,6 +98,20 @@ module.exports = {
 			gamedata.sunlocked = true
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har brugt den rigtige ting, og er nu kommet ind`)
 
+			//hvis man vil til opbevaring og koden er rigtig
+		} else if (going == 'opbevaring' && password == gamedata.opCode) {	
+			gamedata.currentRoom = interaction.options.getString('rum')
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har skrevet den rigtige kode og er gået ind i opbevaring`)
+
+			//hvis man prøver at gå til opbevaring men koden ikke er blevet skrevet
+		} else if (going == 'opbevaring' && password == undefined) {	
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du skal bruge en kode til opbevaring, prøv at lede efter en kode med /search i andre lokaler`)
+
+			//hvis man skriver forkert kode
+		} else if (going == 'opbevaring' && password != gamedata.opCode) {	
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har skrevet den forkerte kode prøv igen`)
+
+			//hvis man prøver at bruge en ting et andet sted en ved sygeplejersken
 		} else {
 			gamedata.currentRoom = interaction.options.getString('rum')
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har nu flyttet dig`)

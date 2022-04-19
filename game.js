@@ -30,6 +30,8 @@ class Game {
         this.styrke = 0;
         this.sunlocked = false;
         this.scheck = false;
+        this.opcheck = false; 
+        this.tcheck = false; 
 
         this.firstPN = Math.floor(Math.random() * 9) + 1;
         this.secondPN = Math.floor(Math.random() * 9) + 1;
