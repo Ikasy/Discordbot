@@ -7,6 +7,6 @@ module.exports = {
 	async execute(interaction, gamedata) {
 		gamedata.doors()
 		console.log(gamedata.available)
-		await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dine muligheder er ${gamedata.available}`);
+		await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dine muligheder er: ${gamedata.available}`);
 	},
 }; 

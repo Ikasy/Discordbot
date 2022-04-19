@@ -6,7 +6,7 @@ class Game {
         this.secondN = Math.floor(Math.random() * 9) + 1;
         this.thirdN = Math.floor(Math.random() * 9) + 1;
         this.fourthN = Math.floor(Math.random() * 9) + 1;
-       this.celler = [ 
+        this.celler = [ 
             ['celle1'],
             ['celle2'],
             ['celle3'],
@@ -27,7 +27,17 @@ class Game {
         console.log(this.code)
         this.inventory = [];
         this.kcheck = false;
-    }
+        this.styrke = 0;
+        this.sunlocked = false;
+        this.scheck = false;
+
+        this.firstPN = Math.floor(Math.random() * 9) + 1;
+        this.secondPN = Math.floor(Math.random() * 9) + 1;
+        this.thirdPN = Math.floor(Math.random() * 9) + 1;
+        this.opCode = `${this.firstPN}${this.secondPN}${this.thirdPN}`;
+        console.log(this.opCode)
+
+        }
 
     pickN(mxNR) {
         let random = Math.floor(Math.random() * mxNR);
@@ -59,7 +69,7 @@ class Game {
             this.available = ["gang"]
         }
         if (this.currentRoom == "gang"){
-            this.available = ['celle1','celle2','celle3','celle4','celle5','celle6','celle7','celle8','celle9','celle10','celle11','celle12','celle13','celle14', 'kantine', "vagt"/*locked */, "reception" /*locked */]
+            this.available = ['celle1','celle2','celle3','celle4','celle5','celle6','celle7','celle8','celle9','celle10','celle11','celle12','celle13','celle14', 'kantine']
         }
         if (this.currentRoom == "kantine"){
             this.available = ["gang ","køkken"/*locked with key*/, "vagt"/*locked for now*/, "træningshal"]
@@ -74,22 +84,22 @@ class Game {
             this.available = ["gang","kantine","udendørs"]
         }
         if (this.currentRoom == "udendørs"){
-            this.available = ["træning","vagt"/*locked for now */,"toilet","sygeplejerske"/*locked with needed item from kitchen*/]
+            this.available = ["træningshal","vagt"/*locked for now */,"toilet","sygeplejerske"/*locked with needed item from kitchen*/]
         }
         if (this.currentRoom == "toilet"){
-            this.available = ["udendørs","sygeplejerske","bad"]
+            this.available = ["udendørs","bad"]
         }
         if (this.currentRoom == "bad"){
             this.available = this.available["toilet"]
         }
         if (this.currentRoom == "sygeplejerske"){
-            this.available = ["udendørs"/*if unlocked*/, "toilet", "opbevaring"/*need key */, "reception"/*need code*/]
+            this.available = ["udendørs"/*if unlocked*/, "opbevaring"/*need key */, "reception"/*need code*/]
         }
         if (this.currentRoom == "opbevaring"){
             this.available = ["sygeplejerske"]
         }
         if (this.currentRoom == "reception"){
-            this.available = ["gang"/*locked */,"sygeplejerske","ud"/*locked */]
+            this.available = ["sygeplejerske","ud"/*locked */]
         }
     }
     

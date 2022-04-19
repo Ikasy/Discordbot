@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, SlashCommandStringOption, SlashCommandIntegerOption } = require('@discordjs/builders');
+const { SlashCommandBuilder, SlashCommandStringOption } = require('@discordjs/builders');
 
 //går sådan man kan hente informatoionerne i en anden fil
 module.exports = {
@@ -37,31 +37,64 @@ module.exports = {
 		.addStringOption( new SlashCommandStringOption()
 			.setName('kode')
             .setDescription('Skriv en kode til låste rum!')
-            .setRequired(false)),
+            .setRequired(false))
+		.addStringOption( new SlashCommandStringOption()
+			.setName('use')
+			.setDescription('Brug en genstand fra din inventory!')
+			.setRequired(false)),
 	async execute(interaction, gamedata) {
 		let going = interaction.options.getString('rum')
 		let password = interaction.options.getString('kode')
+		let used = interaction.options.getString('use')
 		gamedata.doors();
-	
+		
+		//hvis samme rum
 		if (going === gamedata.currentRoom){
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du er allerede her`);
-
-		}else if (!gamedata.available.includes(going)) {
+		
+		//hvis der er for langt hen til det ønskede lokale
+		} else if (!gamedata.available.includes(going)) {
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har ikke adgang til dette rum fra hvor du er, prøv et andet lokale`)
-
+		
+		//hvis man skriver en kode til et rum som ikke er køkken
 		} else if (going != 'køkken' && password != undefined){
 			gamedata.currentRoom = interaction.options.getString('rum')
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dette rum skal ikke bruge en kode, derfor har du flyttet dig alligevel`)
-
+		
+		//hvis man vil til køkkenet og koden er rigtig
 		} else if (going == 'køkken' && password == gamedata.code) {	
 			gamedata.currentRoom = interaction.options.getString('rum')
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har skrevet den rigtige kode og er gået ind i køkkenet`)
 
+		//hvis man prøver at gå til køkkenet men koden ikke er blevet skrevet
 		} else if (going == 'køkken' && password == undefined) {	
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du skal bruge en kode til køkkenet, prøv at lede efter en kode med /search`)
 
+		//hvis man skriver forkert kode
 		} else if (going == 'køkken' && password != gamedata.code) {	
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har skrevet den forkerte kode prøv igen`)
+
+		//hvis man prøver at bruge en ting et andet sted en ved sygeplejersken
+		}  else if (going != 'sygeplejerske' &&   used != undefined){
+			gamedata.currentRoom = interaction.options.getString('rum')
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dette rum skal ikke bruge en genstand for at åbne, derfor har du flyttet dig alligevel`)
+
+		// hvis ikke der er angivet en genstand
+		} else if (going == 'sygeplejerske' && used == undefined && gamedata.sunlocked == false) {	
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dette rum skal bruge en genstand for at åbne, prøv at led efter ting du kan bruge eller kig i din inventory`)
+		}else if (going == 'sygeplejerske' && used == undefined && gamedata.sunlocked == true){
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har allerede låst op for dette rum, og har nu flyttet dig.`)
+
+		//hvis man bruger et forkert item ved sygeplejersken 
+		} else if (going == 'sygeplejerske' && used != 'stegenål' && gamedata.inventory.includes(used) && gamedata.sunlocked == false){
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du kan ikke finde et brug til denne genstand her`)
+		
+			// hvis man bruger den rigtige ting ved sygeplejerske
+		} else if (going == 'sygeplejerske' && used == 'stegenål' && gamedata.inventory.includes(used) && gamedata.sunlocked == false) {
+			//remove stegenål from inventory ***************************
+			gamedata.currentRoom = interaction.options.getString('rum')	
+			gamedata.sunlocked = true
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har brugt den rigtige ting, og er nu kommet ind`)
 
 		} else {
 			gamedata.currentRoom = interaction.options.getString('rum')
