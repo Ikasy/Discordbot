@@ -2,6 +2,7 @@ class Game {
     constructor(){
         this.chosenCells = []
         this.currentRoom = "";
+        //kode til køkken
         this.firstN = Math.floor(Math.random() * 9) + 1;
         this.secondN = Math.floor(Math.random() * 9) + 1;
         this.thirdN = Math.floor(Math.random() * 9) + 1;
@@ -25,19 +26,39 @@ class Game {
         this.available = [];
         this.code = `${this.firstN}${this.secondN}${this.thirdN}${this.fourthN}`;
         console.log(this.code)
-        this.inventory = [];
+        this.inventory = new Set();
         this.kcheck = false;
         this.styrke = 0;
         this.sunlocked = false;
         this.scheck = false;
         this.opcheck = false; 
         this.tcheck = false; 
-
+        this.vunlocked = false;
+        this.vcheck = false; 
+        
+        // kode til opbevaring
         this.firstPN = Math.floor(Math.random() * 9) + 1;
         this.secondPN = Math.floor(Math.random() * 9) + 1;
         this.thirdPN = Math.floor(Math.random() * 9) + 1;
         this.opCode = `${this.firstPN}${this.secondPN}${this.thirdPN}`;
         console.log(this.opCode)
+
+        // kode til ud af receptionen 
+        this.firstRN = Math.floor(Math.random() * 9) + 1;
+        this.secondRN = Math.floor(Math.random() * 9) + 1;
+        this.thirdRN = Math.floor(Math.random() * 9) + 1;
+        this.fourthRN = Math.floor(Math.random() * 9) + 1;
+        this.rCode = `${this.firstRN}${this.secondRN}${this.thirdRN}${this.fourthRN}`;
+        console.log(this.rCode)
+        this.do = 0;
+
+        // kode til receptionen
+        this.firstredN = Math.floor(Math.random() * 9) + 1;
+        this.secondblueN = Math.floor(Math.random() * 9) + 1;
+        this.thirdgreenN = Math.floor(Math.random() * 9) + 1;
+        this.cCode = `${this.firstredN}${this.secondblueN}${this.thirdgreenN}`;
+        console.log(this.cCode)
+
 
         }
 

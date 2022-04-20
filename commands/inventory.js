@@ -5,6 +5,7 @@ module.exports = {
 		.setName('inventory')
 		.setDescription('fortæller hvad der er i din inventory!'),
 	async execute(interaction, gamedata) {
+		console.log(gamedata.inventory)
 		await interaction.reply(`Dette er hvad der er i din inventory: ${gamedata.inventory}.`);
 	},
 };

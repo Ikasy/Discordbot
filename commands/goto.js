@@ -57,7 +57,7 @@ module.exports = {
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har ikke adgang til dette rum fra hvor du er, prøv et andet lokale`)
 		
 		//hvis man skriver en kode til et rum som ikke er køkken
-		} else if (going != 'køkken' && password != undefined && going != 'opbevaring'){
+		} else if (going != 'køkken' && password != undefined && going != 'opbevaring' && going != 'sygeplejerske' && going != 'vagt'){
 			gamedata.currentRoom = interaction.options.getString('rum')
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dette rum skal ikke bruge en kode, derfor har du flyttet dig alligevel`)
 		
@@ -75,7 +75,7 @@ module.exports = {
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har skrevet den forkerte kode prøv igen`)
 
 		//hvis man prøver at bruge en ting et andet sted en ved sygeplejersken
-		}  else if (going != 'sygeplejerske' &&   used != undefined && going != 'vagt'){
+		}  else if (going != 'sygeplejerske' && used != undefined && going != 'vagt' && going != 'køkken'  && going != 'opbevaring'){
 			gamedata.currentRoom = interaction.options.getString('rum')
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dette rum skal ikke bruge en genstand for at åbne, derfor har du flyttet dig alligevel`)
 
@@ -83,20 +83,23 @@ module.exports = {
 		} else if (going == 'sygeplejerske' && used == undefined && gamedata.sunlocked == false) {	
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dette rum skal bruge en genstand for at åbne, prøv at led efter ting du kan bruge eller kig i din inventory`)
 
-		}else if (going == 'sygeplejerske' && used == undefined && gamedata.sunlocked == true){
+		} else if (going === 'sygeplejerske' && used === undefined && gamedata.sunlocked === true){
 			gamedata.currentRoom = interaction.options.getString('rum')	
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har allerede låst op for dette rum, og har nu flyttet dig.`)
 
 		//hvis man bruger et forkert item ved sygeplejersken 
-		} else if (going == 'sygeplejerske' && used != 'stegenål' && gamedata.inventory.includes(used) && gamedata.sunlocked == false){
+		} else if (going === 'sygeplejerske' && used !== 'stegenål' && gamedata.inventory.has(used) && gamedata.sunlocked == false){
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du kan ikke finde et brug til denne genstand her`)
 		
 			// hvis man bruger den rigtige ting ved sygeplejerske
-		} else if (going == 'sygeplejerske' && used == 'stegenål' && gamedata.inventory.includes(used) && gamedata.sunlocked == false) {
-			//remove stegenål from inventory ***************************
+		} else if (going === 'sygeplejerske' && used === 'stegenål' && gamedata.inventory.has(used) && gamedata.sunlocked === false) {
+			gamedata.inventory.delete(used)
 			gamedata.currentRoom = interaction.options.getString('rum')	
 			gamedata.sunlocked = true
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har brugt den rigtige ting, og er nu kommet ind`)
+			
+		} else if (going == 'sygeplejerske' && !gamedata.inventory.has(used) && used != undefined || going == 'vagt' && !gamedata.inventory.has(used) && used != undefined ) {
+				await interaction.reply(`Du har ikke din ønskede genstand. Tjek din inventory med /inventory for at se hvad du har tilrådighed`);
 
 			//hvis man vil til opbevaring og koden er rigtig
 		} else if (going == 'opbevaring' && password == gamedata.opCode) {	
@@ -111,7 +114,25 @@ module.exports = {
 		} else if (going == 'opbevaring' && password != gamedata.opCode) {	
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har skrevet den forkerte kode prøv igen`)
 
-			//hvis man prøver at bruge en ting et andet sted en ved sygeplejersken
+			
+		} else if (going == 'vagt' && used == undefined && gamedata.vunlocked == false) {	
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dette rum skal bruge en genstand for at åbne, prøv at led efter ting du kan bruge eller kig i din inventory`)
+
+		} else if (going == 'vagt' && used == undefined && gamedata.vunlocked == true){
+			gamedata.currentRoom = interaction.options.getString('rum')	
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har allerede låst op for dette rum, og har nu flyttet dig.`)
+
+		//hvis man bruger et forkert item ved vagt 
+		} else if (going == 'vagt' && used != 'nøglebundt' && gamedata.inventory.has(used) && gamedata.vunlocked == false){
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du kan ikke finde et brug til denne genstand her`)
+		
+			// hvis man bruger den rigtige ting ved vagt
+		} else if (going == 'vagt' && used == 'nøglebundt' && gamedata.inventory.has(used) && gamedata.vunlocked == false) {
+			gamedata.inventory.delete(used)
+			gamedata.currentRoom = interaction.options.getString('rum')	
+			gamedata.vunlocked = true
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har brugt den rigtige ting, og er nu kommet ind`)
+
 		} else {
 			gamedata.currentRoom = interaction.options.getString('rum')
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har nu flyttet dig`)
