@@ -7,9 +7,14 @@ module.exports = {
 		.addStringOption( new SlashCommandStringOption()
 			.setName('use')
 			.setDescription('Brug en genstand fra din inventory!')
-			.setRequired(false)),
+			.setRequired(false))
+		.addStringOption( new SlashCommandStringOption()
+			.setName('kode')
+            .setDescription('Skriv en kode til låste ting!')
+            .setRequired(false)),
 	async execute(interaction, gamedata) {
 			let used = interaction.options.getString('use')
+			let password = interaction.options.getString('kode')
 
 			if (gamedata.celler[gamedata.chosenCells[0]][0] == gamedata.currentRoom ){
 				await interaction.reply(`Du fandt noget i væggen ${gamedata.celler[gamedata.chosenCells[0]][1]} `);
@@ -125,13 +130,6 @@ module.exports = {
 			} else if (gamedata.currentRoom == 'vagt' && gamedata.vcheck == true) {
 				await interaction.reply(`Du har allerede kigget i vagtstuen. Der er ikke mere`);
 
-
-
-
-
-
-
-
 			} else if (gamedata.currentRoom == 'udendørs' && used == undefined) {
 				await interaction.reply(`Du kan se der er et privat hjørne hvor der ikke er langt herind og frihed, mon man kunne finde noget der ville kunne få en ud?`);
 
@@ -161,6 +159,22 @@ module.exports = {
 				console.log(gamedata.inventory)
 				await interaction.reply(`Denne genstand kan ikke bruges her`);
 
+			} else if (gamedata.currentRoom == 'bad') {
+				await interaction.reply(`Du lægger mærke til at der er nogle andre farvede fliser, du giver dig til at tælle dem \n Røde: ${gamedata.firstredN} \n Blå: ${gamedata.secondblueN} \n Grønne: ${gamedata.thirdgreenN}`);
+
+			} else if (gamedata.currentRoom == 'reception' && password == undefined) {
+				await interaction.reply(`Du står nu i receptionen hvor du i sin tid kom ind, alt hvad der holder dig fra frihed nu er en kode på døren gad vide hvor den gemmer sig`);
+
+			} else if (gamedata.currentRoom == 'reception' && password != undefined && password != gamedata.rCode) {	
+				await interaction.reply(`Du har skrevet en forkert kode, prøv igen`);
+
+			} else if (gamedata.currentRoom == 'reception' && password != undefined && password == gamedata.rCode) {	
+				await interaction.reply(`Du har skrevet den rigtige kode og er nu endelig kommet ud`);
+
+			} else if (password != undefined && gamedata.currentRoom != 'reception'){
+				gamedata.currentRoom = interaction.options.getString('rum')
+				await interaction.reply(`Dette rum indeholder ikke noget der skal bruge en kode`)			
+			
 			} else {
 				await interaction.reply('Du fandt ikke noget, prøv et andet sted!');
 			}

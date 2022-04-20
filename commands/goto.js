@@ -57,7 +57,7 @@ module.exports = {
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har ikke adgang til dette rum fra hvor du er, prøv et andet lokale`)
 		
 		//hvis man skriver en kode til et rum som ikke er køkken
-		} else if (going != 'køkken' && password != undefined && going != 'opbevaring' && going != 'sygeplejerske' && going != 'vagt'){
+		} else if (going != 'køkken' && password != undefined && going != 'opbevaring' && going != 'sygeplejerske' && going != 'vagt' && going != 'reception'){
 			gamedata.currentRoom = interaction.options.getString('rum')
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dette rum skal ikke bruge en kode, derfor har du flyttet dig alligevel`)
 		
@@ -75,7 +75,7 @@ module.exports = {
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har skrevet den forkerte kode prøv igen`)
 
 		//hvis man prøver at bruge en ting et andet sted en ved sygeplejersken
-		}  else if (going != 'sygeplejerske' && used != undefined && going != 'vagt' && going != 'køkken'  && going != 'opbevaring'){
+		}  else if (going != 'sygeplejerske' && used != undefined && going != 'vagt' && going != 'køkken' && going != 'opbevaring' && going != 'reception'){
 			gamedata.currentRoom = interaction.options.getString('rum')
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dette rum skal ikke bruge en genstand for at åbne, derfor har du flyttet dig alligevel`)
 
@@ -114,7 +114,6 @@ module.exports = {
 		} else if (going == 'opbevaring' && password != gamedata.opCode) {	
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har skrevet den forkerte kode prøv igen`)
 
-			
 		} else if (going == 'vagt' && used == undefined && gamedata.vunlocked == false) {	
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Dette rum skal bruge en genstand for at åbne, prøv at led efter ting du kan bruge eller kig i din inventory`)
 
@@ -133,7 +132,36 @@ module.exports = {
 			gamedata.vunlocked = true
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har brugt den rigtige ting, og er nu kommet ind`)
 
-		} else {
+		} else if (going == 'reception' && password == gamedata.cCode) {	
+			gamedata.currentRoom = interaction.options.getString('rum')
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har skrevet den rigtige kode og er gået ind i receptionen`)
+
+			//hvis man prøver at gå til opbevaring men koden ikke er blevet skrevet
+		} else if (going == 'reception' && password == undefined) {	
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du skal bruge en kode til receptionen, på låsen kan du i denne rækkefælge se farverne rød, blå, grøn, prøv at lede efter en kode med /search i andre lokaler`)
+
+			//hvis man skriver forkert kode
+		} else if (going == 'reception' && password != gamedata.cCode) {	
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har skrevet den forkerte kode prøv igen. Husk farven på låsen var rød, blå, grøn.`)
+
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		else {
 			gamedata.currentRoom = interaction.options.getString('rum')
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har nu flyttet dig`)
 
