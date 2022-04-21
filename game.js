@@ -89,7 +89,7 @@ class Game {
             this.available = ['celle1','celle2','celle3','celle4','celle5','celle6','celle7','celle8', 'kantine']
         }
         if (this.currentRoom == "kantine"){
-            this.available = ["gang ","køkken"/*locked with key*/, "vagt"/*locked for now*/, "træningshal"]
+            this.available = ["gang","køkken"/*locked with key*/, "vagt"/*locked for now*/, "træningshal"]
         }
         if (this.currentRoom == "køkken"){
             this.available = ["kantine"]
@@ -107,7 +107,7 @@ class Game {
             this.available = ["udendørs","bad"]
         }
         if (this.currentRoom == "bad"){
-            this.available = this.available["toilet"]
+            this.available = ["toilet"]
         }
         if (this.currentRoom == "sygeplejerske"){
             this.available = ["udendørs"/*if unlocked*/, "opbevaring"/*need key */, "reception"/*need code*/]

@@ -35,8 +35,8 @@ module.exports = {
 				gamedata.inventory.add("banan")
 				gamedata.inventory.add("bolle")
 				gamedata.inventory.add("kniv")
-				console.log(gamedata.inventory)
-				await interaction.reply(`Du har fundet nogle ting som du kan bruge ${gamedata.inventory.value}`);
+				console.log(Array.from(gamedata.inventory))
+				await interaction.reply(`Du har fundet nogle ting som du kan bruge ${Array.from(gamedata.inventory)}`);
 				gamedata.kcheck = true;
 			} else if (gamedata.currentRoom == 'køkken' && gamedata.kcheck == true) {
 				await interaction.reply(`Du har allerede kigget i køkkenet. Der er ikke mere`);
@@ -50,29 +50,29 @@ module.exports = {
 			} else if (gamedata.currentRoom == 'træningshal' && gamedata.inventory.has(used)  && used == 'æble') {
 				gamedata.styrke++
 				gamedata.inventory.delete(used)
-				console.log(gamedata.inventory)
+				console.log(Array.from(gamedata.inventory))
 				await interaction.reply(`Du har spist dit æble og trænet. \n Styrkeniveau: ${gamedata.styrke}`);
 
 			} else if (gamedata.currentRoom == 'træningshal' && gamedata.inventory.has(used)  && used == 'banan') {
 				gamedata.styrke++
 				gamedata.inventory.delete(used)
-				console.log(gamedata.inventory)
+				console.log(Array.from(gamedata.inventory))
 				await interaction.reply(`Du har spist dit banan og trænet. \n Styrkeniveau: ${gamedata.styrke}`);
 
 			} else if (gamedata.currentRoom == 'træningshal' && gamedata.inventory.has(used)  && used == 'bolle') {
 				gamedata.styrke++
 				gamedata.inventory.delete(used)
-				console.log(gamedata.inventory)
+				console.log(Array.from(gamedata.inventory))
 				await interaction.reply(`Du har spist dit bolle og trænet. \n Styrkeniveau: ${gamedata.styrke}`);
 
 			} else if (gamedata.currentRoom == 'træningshal' && gamedata.inventory.has(used)  && used != 'bolle' || gamedata.currentRoom == 'træningshal' && gamedata.inventory.has(used)  && used != 'banan'||gamedata.currentRoom == 'træningshal' && gamedata.inventory.has(used)  && used != 'æble') {
-				console.log(gamedata.inventory)
+				console.log(Array.from(gamedata.inventory))
 				await interaction.reply(`Denne genstand kan ikke bruges her`);
 
 			} else if (gamedata.currentRoom == 'sygeplejerske' && gamedata.scheck == false) {
 				gamedata.inventory.add("bandage")
 				gamedata.inventory.add("gummihandsker")
-				await interaction.reply(`Du har fundet nogle ting som du kan bruge ${gamedata.inventory}`);
+				await interaction.reply(`Du har fundet nogle ting som du kan bruge ${Array.from(gamedata.inventory)}`);
 				gamedata.kcheck = true;
 			} else if (gamedata.currentRoom == 'sygeplejerske' && gamedata.scheck == true) {
 				await interaction.reply(`Du har allerede kigget i køkkenet. Der er ikke mere`);
@@ -82,27 +82,26 @@ module.exports = {
 
 			} else if (gamedata.currentRoom == 'kantine' && gamedata.inventory.has(used)  && used == 'bandage') {
 				gamedata.inventory.delete(used)
-				console.log(gamedata.inventory)
+				console.log(Array.from(gamedata.inventory))
 				await interaction.reply(`Den anden fange tager imod din bandage og giver i bytte et papir som han siger en vagt har tabt. Der er et tal på; ${gamedata.firstPN}`);
 
 			} else if (gamedata.currentRoom == 'kantine' && gamedata.inventory.has(used)  && used == 'kniv') {
 				gamedata.inventory.delete(used)
-				console.log(gamedata.inventory)
+				console.log(Array.from(gamedata.inventory))
 				await interaction.reply(`Den anden fange tager imod din kniv og giver i bytte et papir som han siger en vagt har tabt. Der er et tal på; ${gamedata.secondPN}`);
 
 			} else if (gamedata.currentRoom == 'kantine' && gamedata.inventory.has(used)  && used == 'saks') {
 				gamedata.inventory.delete(used)
-				console.log(gamedata.inventory)
+				console.log(Array.from(gamedata.inventory))
 				await interaction.reply(`Den anden fange tager imod din saks og giver i bytte et papir som han siger en vagt har tabt. Der er et tal på; ${gamedata.thirdPN}`);
 
 			} else if (gamedata.currentRoom == 'kantine' && gamedata.inventory.has(used)  && used != 'bandage' || gamedata.currentRoom == 'kantine' && gamedata.inventory.has(used)  && used != 'kniv'||gamedata.currentRoom == 'kantine' && gamedata.inventory.has(used)  && used != 'saks') {
-				gamedata.inventory.delete(used)
-				console.log(gamedata.inventory)
+				console.log(Array.from(gamedata.inventory))
 				await interaction.reply(`Denne genstand kan ikke bruges her`);
 
 			}  else if (gamedata.currentRoom == 'opbevaring' && gamedata.opcheck == false && used == undefined) {
 				gamedata.inventory.add("skovl")
-				await interaction.reply(`Du har fundet nogle ting som du kan bruge ${gamedata.inventory} \n Der står også en bankboks bagerst i lokalet men den ligner en der skal bruges en nøgle for at åbne den`);
+				await interaction.reply(`Du har fundet nogle ting som du kan bruge ${Array.from(gamedata.inventory)} \n Der står også en bankboks bagerst i lokalet men den ligner en der skal bruges en nøgle for at åbne den`);
 				gamedata.opcheck = true;
 
 			} else if (gamedata.currentRoom == 'opbevaring' && gamedata.opcheck == true && used == undefined) {
@@ -115,7 +114,7 @@ module.exports = {
 	
 			} else if (gamedata.currentRoom == 'toilet' && gamedata.tcheck == false) {
 				gamedata.inventory.add("nøglebundt")
-				await interaction.reply(`Du har fundet nogle ting som du kan bruge ${gamedata.inventory}`);
+				await interaction.reply(`Du har fundet nogle ting som du kan bruge ${Array.from(gamedata.inventory)}`);
 				gamedata.tcheck = true;
 			} else if (gamedata.currentRoom == 'toilet' && gamedata.tcheck == true) {
 				await interaction.reply(`Du har allerede kigget på toilettet. Der er ikke mere`);
@@ -125,7 +124,7 @@ module.exports = {
 				gamedata.inventory.add("lommelygte")
 				console.log(gamedata.inventory)
 				gamedata.vcheck = true;
-				await interaction.reply(`Du har fundet nogle ting som du kan bruge ${gamedata.inventory.value}`);
+				await interaction.reply(`Du har fundet nogle ting som du kan bruge ${Array.from(gamedata.inventory)}`);
 				
 			} else if (gamedata.currentRoom == 'vagt' && gamedata.vcheck == true) {
 				await interaction.reply(`Du har allerede kigget i vagtstuen. Der er ikke mere`);
@@ -158,7 +157,6 @@ module.exports = {
 				await interaction.reply(`Du er for svag til at grave, prøv at træne lidt muskler`);
 
 			} else if (gamedata.currentRoom == 'udendørs' && gamedata.inventory.has(used)  && used != 'gummihandsker' || gamedata.currentRoom == 'udendørs' && gamedata.inventory.has(used)  && used != 'lommelygte'||gamedata.currentRoom == 'udendørs' && gamedata.inventory.has(used)  && used != 'skovl') {
-				gamedata.inventory.delete(used)
 				console.log(gamedata.inventory)
 				await interaction.reply(`Denne genstand kan ikke bruges her`);
 
@@ -172,7 +170,7 @@ module.exports = {
 				await interaction.reply(`Du har skrevet en forkert kode, prøv igen`);
 
 			} else if (gamedata.currentRoom == 'reception' && password != undefined && password == gamedata.rCode) {	
-				await interaction.reply(`Du har skrevet den rigtige kode og er nu endelig kommet ud`);
+				await interaction.reply(`Du har skrevet den rigtige kode og er nu endelig kommet ud :partying_face:`);
 
 			} else if (password != undefined && gamedata.currentRoom != 'reception'){
 				gamedata.currentRoom = interaction.options.getString('rum')
