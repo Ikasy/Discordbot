@@ -148,11 +148,14 @@ module.exports = {
 				console.log(gamedata.inventory)
 				await interaction.reply(`Du har tændt for lommelygten så du kan se mens du graver`);
 
-			} else if (gamedata.currentRoom == 'udendørs' && gamedata.inventory.has(used)  && used == 'skovl') {
+			} else if (gamedata.currentRoom == 'udendørs' && gamedata.inventory.has(used)  && used == 'skovl' && gamedata.styrke == 3) {
 				gamedata.do++
 				gamedata.inventory.delete(used)
 				console.log(gamedata.inventory)
 				await interaction.reply(`Du er nu begyndt og grave`);
+
+			}  else if (gamedata.currentRoom == 'udendørs' && gamedata.inventory.has(used)  && used == 'skovl' && !gamedata.styrke == 3) {
+				await interaction.reply(`Du er for svag til at grave, prøv at træne lidt muskler`);
 
 			} else if (gamedata.currentRoom == 'udendørs' && gamedata.inventory.has(used)  && used != 'gummihandsker' || gamedata.currentRoom == 'udendørs' && gamedata.inventory.has(used)  && used != 'lommelygte'||gamedata.currentRoom == 'udendørs' && gamedata.inventory.has(used)  && used != 'skovl') {
 				gamedata.inventory.delete(used)
