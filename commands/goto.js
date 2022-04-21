@@ -18,12 +18,6 @@ module.exports = {
 			.addChoice('Celle 6', 'celle6')
 			.addChoice('Celle 7', 'celle7')
 			.addChoice('Celle 8', 'celle8')
-			.addChoice('Celle 9', 'celle9')
-			.addChoice('Celle 10', 'celle10')
-			.addChoice('Celle 11', 'celle11')
-			.addChoice('Celle 12', 'celle12')
-			.addChoice('Celle 13', 'celle13')
-			.addChoice('Celle 14', 'celle14')
 			.addChoice('Kantine', 'kantine')
 			.addChoice('Køkken', 'køkken')
 			.addChoice('Træningshal', 'træningshal')
@@ -68,11 +62,11 @@ module.exports = {
 
 		//hvis man prøver at gå til køkkenet men koden ikke er blevet skrevet
 		} else if (going == 'køkken' && password == undefined) {	
-			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du skal bruge en kode til køkkenet, prøv at lede efter en kode med /search`)
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du skal bruge en kode til køkkenet. Der er ridset over tallene på låsen der går fra lille til stor, prøv at lede efter en kode med /search`)
 
 		//hvis man skriver forkert kode
 		} else if (going == 'køkken' && password != gamedata.code) {	
-			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har skrevet den forkerte kode prøv igen`)
+			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har skrevet den forkerte kode prøv igen, husk ridserne over tallene på låsen der går fra lille til stor`)
 
 		//hvis man prøver at bruge en ting et andet sted en ved sygeplejersken
 		}  else if (going != 'sygeplejerske' && used != undefined && going != 'vagt' && going != 'køkken' && going != 'opbevaring' && going != 'reception'){

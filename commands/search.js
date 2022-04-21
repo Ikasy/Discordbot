@@ -17,16 +17,16 @@ module.exports = {
 			let password = interaction.options.getString('kode')
 
 			if (gamedata.celler[gamedata.chosenCells[0]][0] == gamedata.currentRoom ){
-				await interaction.reply(`Du fandt noget i væggen ${gamedata.celler[gamedata.chosenCells[0]][1]} `);
+				await interaction.reply(`Du fandt noget ridset i væggen, dette er ridset meget småt ${gamedata.celler[gamedata.chosenCells[0]][1]} `);
 
 			} else if (gamedata.celler[gamedata.chosenCells[1]][0] == gamedata.currentRoom) {
-				await interaction.reply(`Du fandt noget i væggen ${gamedata.celler[gamedata.chosenCells[1]][1]} `);
+				await interaction.reply(`Du fandt noget ridset i væggen, dette er ridset småt  ${gamedata.celler[gamedata.chosenCells[1]][1]} `);
 
 			} else if (gamedata.celler[gamedata.chosenCells[2]][0] == gamedata.currentRoom ) {
-				await interaction.reply(`Du fandt noget i væggen ${gamedata.celler[gamedata.chosenCells[2]][1]} `);
+				await interaction.reply(`Du fandt noget ridset i væggen, dette er ridset almindelig størrelse ${gamedata.celler[gamedata.chosenCells[2]][1]} `);
 
 			} else if (gamedata.celler[gamedata.chosenCells[3]][0] == gamedata.currentRoom) {
-				await interaction.reply(`Du fandt noget i væggen ${gamedata.celler[gamedata.chosenCells[3]][1]} `);
+				await interaction.reply(`Du fandt noget ridset i væggen, dette er ridset meget stort ${gamedata.celler[gamedata.chosenCells[3]][1]} `);
 
 			} else if (gamedata.currentRoom == 'køkken' && gamedata.kcheck == false) {
 				gamedata.inventory.add("stegenål")

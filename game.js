@@ -16,12 +16,6 @@ class Game {
             ['celle6'],
             ['celle7'],
             ['celle8'],
-            ['celle9'],
-            ['celle10'],
-            ['celle11'],
-            ['celle12'],
-            ['celle13'],
-            ['celle14'],
         ];
         this.available = [];
         this.code = `${this.firstN}${this.secondN}${this.thirdN}${this.fourthN}`;
@@ -78,21 +72,21 @@ class Game {
         }}}
 
     ready(){
-        this.pickN(14)
-        this.pickN(14)
-        this.pickN(14)
-        this.pickN(14)
+        this.pickN(8)
+        this.pickN(8)
+        this.pickN(8)
+        this.pickN(8)
         this.celler[this.chosenCells[0]].push( this.firstN );
         this.celler[this.chosenCells[1]].push( this.secondN );
         this.celler[this.chosenCells[2]].push( this.thirdN );
         this.celler[this.chosenCells[3]].push( this.fourthN );
     }
     doors(){
-        if (this.currentRoom == "celle1" || this.currentRoom == "celle2" || this.currentRoom == "celle3"|| this.currentRoom == "celle4" || this.currentRoom == "celle5"|| this.currentRoom == "celle6"|| this.currentRoom == "celle7" || this.currentRoom == "celle8" || this.currentRoom == "celle9" || this.currentRoom == "celle10" || this.currentRoom == "celle11" || this.currentRoom == "celle12" || this.currentRoom == "celle13"|| this.currentRoom == "celle14" ) {
+        if (this.currentRoom == "celle1" || this.currentRoom == "celle2" || this.currentRoom == "celle3"|| this.currentRoom == "celle4" || this.currentRoom == "celle5"|| this.currentRoom == "celle6"|| this.currentRoom == "celle7" || this.currentRoom == "celle8" ) {
             this.available = ["gang"]
         }
         if (this.currentRoom == "gang"){
-            this.available = ['celle1','celle2','celle3','celle4','celle5','celle6','celle7','celle8','celle9','celle10','celle11','celle12','celle13','celle14', 'kantine']
+            this.available = ['celle1','celle2','celle3','celle4','celle5','celle6','celle7','celle8', 'kantine']
         }
         if (this.currentRoom == "kantine"){
             this.available = ["gang ","køkken"/*locked with key*/, "vagt"/*locked for now*/, "træningshal"]
