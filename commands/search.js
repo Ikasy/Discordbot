@@ -161,6 +161,10 @@ module.exports = {
 				console.log(gamedata.inventory)
 				await interaction.reply(`Denne genstand kan ikke bruges her`);
 
+			}else if (gamedata.do == 3){
+				await interaction.reply(`Du har gravet dig ud og er nu fri`);
+				gamedata = new Game();
+
 			} else if (gamedata.currentRoom == 'bad') {
 				await interaction.reply(`Du lægger mærke til at der er nogle andre farvede fliser, du giver dig til at tælle dem \n Røde: ${gamedata.firstredN} \n Blå: ${gamedata.secondblueN} \n Grønne: ${gamedata.thirdgreenN}`);
 
