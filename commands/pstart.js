@@ -7,7 +7,7 @@ module.exports = {
 	async execute(interaction, gamedata) {
 		gamedata.currentRoom = "celle5"
 		gamedata.ready();
-		await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har nu startet fængsel eventyret. Du befinder dig i din celle og kan gå ud til frokost når du lyster. Forsæt med /opendoors for at se hvor du kan gå hen og /goto for at flytte lokale.`);
+		await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Endnu en dag bag tæmmer, men i dag skal være den sidste, du skal bryde ud, du har lagt planen for at komme ud herfra, men det kræver der bliver fundet de mange koder og objekter der skal til for at åbne dørene. Du er i stand til at bevæge dig mellem din fængselscelle, gang, kantine, træningsgården og udendørsarealet. Ved at bruge funktionen /goto kan man bevæge sig til nært læggende rum og ved at bruge /search kan man i disse rum lede efter objekter til at komme ud med. Til disse to kommandoer er der valgfrie variabler til koder eller til objekter du ønsker at bruge i rummet. Alt hvad du finder, ligger inde i dit inventar det kan tilgås ved at skrive /inventory. `);
 		console.table(gamedata.celler);
 	},
 };

@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, SlashCommandStringOption } = require('@discordjs/builders');
+const { Game } = require('../game');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -171,7 +172,7 @@ module.exports = {
 
 			} else if (gamedata.currentRoom == 'reception' && password != undefined && password == gamedata.rCode) {	
 				await interaction.reply(`Du har skrevet den rigtige kode og er nu endelig kommet ud :partying_face:`);
-
+					gamedata = new Game();
 			} else if (password != undefined && gamedata.currentRoom != 'reception'){
 				gamedata.currentRoom = interaction.options.getString('rum')
 				await interaction.reply(`Dette rum indeholder ikke noget der skal bruge en kode`)			
