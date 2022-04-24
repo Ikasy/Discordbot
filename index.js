@@ -2,9 +2,10 @@ const fs = require('node:fs');
 const { Client, Collection, Intents } = require('discord.js');
 const { deploy } = require('./deploy-commands.js');
 const { Game } = require('./game');
+require("dotenv").config();
 //henter bottens token
-const { token, guildId, clientId } = require('./config.json');
-deploy(clientId, guildId, token)
+//const { token, guildId, clientId } = require('./config.json');
+deploy(process.env.CLIENTID, process.env.GUILDID, process.env.TOKEN)
 //fortæller botten, hvad den skal hente
 const client = new Client({ intents: 
     [Intents.FLAGS.GUILDS],
@@ -44,4 +45,4 @@ client.on('interactionCreate', async interaction => {
 	}
 });
 // lader botten logge ind
-client.login(token);
+client.login(process.env.TOKEN);
