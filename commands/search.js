@@ -29,6 +29,10 @@ module.exports = {
 			} else if (gamedata.celler[gamedata.chosenCells[3]][0] == gamedata.currentRoom) {
 				await interaction.reply(`Du fandt noget ridset i væggen, dette er ridset meget stort ${gamedata.celler[gamedata.chosenCells[3]][1]} `);
 
+			} else if (gamedata.do == 3){
+				await interaction.reply(`Du har gravet dig ud og er nu fri`);
+				gamedata = new Game();
+
 			} else if (gamedata.currentRoom == 'køkken' && gamedata.kcheck == false) {
 				gamedata.inventory.add("stegenål")
 				gamedata.inventory.add("æble")
@@ -58,13 +62,13 @@ module.exports = {
 				gamedata.styrke++
 				gamedata.inventory.delete(used)
 				console.log(Array.from(gamedata.inventory))
-				await interaction.reply(`Du har spist dit banan og trænet. \n Styrkeniveau: ${gamedata.styrke}`);
+				await interaction.reply(`Du har spist din banan og trænet. \n Styrkeniveau: ${gamedata.styrke}`);
 
 			} else if (gamedata.currentRoom == 'træningshal' && gamedata.inventory.has(used)  && used == 'bolle') {
 				gamedata.styrke++
 				gamedata.inventory.delete(used)
 				console.log(Array.from(gamedata.inventory))
-				await interaction.reply(`Du har spist dit bolle og trænet. \n Styrkeniveau: ${gamedata.styrke}`);
+				await interaction.reply(`Du har spist din bolle og trænet. \n Styrkeniveau: ${gamedata.styrke}`);
 
 			} else if (gamedata.currentRoom == 'træningshal' && gamedata.inventory.has(used)  && used != 'bolle' || gamedata.currentRoom == 'træningshal' && gamedata.inventory.has(used)  && used != 'banan'||gamedata.currentRoom == 'træningshal' && gamedata.inventory.has(used)  && used != 'æble') {
 				console.log(Array.from(gamedata.inventory))
@@ -160,10 +164,6 @@ module.exports = {
 			} else if (gamedata.currentRoom == 'udendørs' && gamedata.inventory.has(used)  && used != 'gummihandsker' || gamedata.currentRoom == 'udendørs' && gamedata.inventory.has(used)  && used != 'lommelygte'||gamedata.currentRoom == 'udendørs' && gamedata.inventory.has(used)  && used != 'skovl') {
 				console.log(gamedata.inventory)
 				await interaction.reply(`Denne genstand kan ikke bruges her`);
-
-			}else if (gamedata.do == 3){
-				await interaction.reply(`Du har gravet dig ud og er nu fri`);
-				gamedata = new Game();
 
 			} else if (gamedata.currentRoom == 'bad') {
 				await interaction.reply(`Du lægger mærke til at der er nogle andre farvede fliser, du giver dig til at tælle dem \n Røde: ${gamedata.firstredN} \n Blå: ${gamedata.secondblueN} \n Grønne: ${gamedata.thirdgreenN}`);
