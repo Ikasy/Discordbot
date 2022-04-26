@@ -138,24 +138,7 @@ module.exports = {
 		} else if (going == 'reception' && password != gamedata.cCode) {	
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har skrevet den forkerte kode prøv igen. Husk farven på låsen var rød, blå, grøn.`)
 
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		else {
+		} else {
 			gamedata.currentRoom = interaction.options.getString('rum')
 			await interaction.reply(`Lokation: ${gamedata.currentRoom}\n Du har nu flyttet dig`)
 
